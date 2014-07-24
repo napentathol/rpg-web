@@ -1,0 +1,11 @@
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        block content
+
+        script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
+        script(defer, src='/js/script.js')
+        script(defer, src='/socket.io/socket.io.js')
