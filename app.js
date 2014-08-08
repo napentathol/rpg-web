@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 require('./table-init');
 
-var routes = require('./src/routes/index');
+var routes = require('./src/routes/Index');
 var apis = require('./src/routes/ApiRoutes');
 
 var app = express();

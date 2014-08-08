@@ -30,8 +30,8 @@ module.exports = (function(){
         );
 
         // Create admin user.
-        salt = crypto.randomBytes(6).toString('base64');
-        hashpass = crypto.createHmac('md5', salt)
+        var salt = crypto.randomBytes(6).toString('base64');
+        var hashpass = crypto.createHmac('md5', salt)
             .update('pass')
             .digest('base64');
         connection.query("INSERT INTO users (username, password, email, salt) " +
