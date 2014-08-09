@@ -4,8 +4,10 @@
 
 var express = require('express');
 var UserDAO = require('../daos/UserDAO');
+var CookiesDAO = require('../daos/CookiesDAO');
 var User = require('../models/User');
 var router = express.Router();
+var config = require('../../config.js');
 
 function getUsers(req, res){
     /**
@@ -42,11 +44,11 @@ function createUser(req,res){
 }
 
 function login(req,res){
-    function callback(isLoggedIn){
-        if(isLoggedIn){
-            res.cookie('nalRpgLogin', 'hi', { maxAge: 900000 });
+    function cookieCallback(cookie) {
+        if (cookie) {
+            res.cookie(config.cookieName, cookie, { maxAge: 900000 });
             res.json({
-                'success' : 'Login succeeded!'
+                'success': 'Login succeeded!'
             });
         } else {
             res.json({
@@ -54,13 +56,20 @@ function login(req,res){
             });
         }
     }
-    try {
-        var userDAO = new UserDAO(User);
 
-        userDAO.login(req.body, callback);
-    } catch (err){
-        throw err;
+    function callback(isLoggedIn){
+        if(isLoggedIn){
+            var cookieDAO = new CookiesDAO();
+            cookieDAO.getNewCookie(req.body.username, req.ip, cookieCallback);
+        } else {
+            res.json({
+                'error' : 'Login failed!'
+            });
+        }
     }
+
+    var userDAO = new UserDAO(User);
+    userDAO.login(req.body, callback);
 }
 
 router.get('/users', getUsers);

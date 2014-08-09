@@ -9,7 +9,9 @@ config = {
     mysqlPort : 3306,
     mysqlUser : "test",
     mysqlPass : "",
-    mysqlDB : "rpg_test"
+    mysqlDB : "rpg_test",
+
+    cookieName : "rpg_cookie"
 };
 
 module.exports = config;

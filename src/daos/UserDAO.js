@@ -21,16 +21,21 @@ module.exports = function () {
             // Select statement callback
             function getAllIdUserSelect(connection) {
                 connection.query(
-                    "SELECT * FROM users WHERE PK = :id ;",
-                    { id: id },
+                    "SELECT * FROM users WHERE PK = ? ;",
+                    [ id ],
                     function (err, rows) {
                         if (err) {
                             console.error(err.stack);
-                        }
-                        if (rows.length > 1) {
+                            callback(false);
+                        } else if (rows.length > 1) {
                             console.error(new Error("Retrieved more than one user with a id.").stack);
+                            callback(false);
+                        }  else if (rows.length < 1) {
+                            console.error("Could not retrieve user with a id.");
+                            callback(false);
+                        } else {
+                            callback(createUser(rows[0]));
                         }
-                        callback(createUser(rows[0]));
                     }
                 );
             }
@@ -83,7 +88,7 @@ module.exports = function () {
             function createUser(connection) {
                 connection.query(
                         "INSERT INTO users ( username, password, email, salt ) " +
-                        "VALUES ( :username, :password, :email, :salt)",
+                        "VALUES ( :username, :password, :email, :salt )",
                     {
                         username: user.username,
                         password: hashpass,
@@ -95,7 +100,6 @@ module.exports = function () {
                             console.error(err.stack);
                         }
                         callback(rows);
-
                     }
                 );
             }
