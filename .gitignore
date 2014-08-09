@@ -1,3 +1,4 @@
 node_modules
 .idea
 rpg-web.iml
+npm-debug.log

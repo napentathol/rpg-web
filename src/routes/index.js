@@ -1,9 +1,21 @@
 var express = require('express');
 var router = express.Router();
+var PermissionsDAO = require('../daos/PermissionsDAO.js');
+var User = require('../models/User.js');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
+    var permissionsDAO = new PermissionsDAO(User);
+
+    permissionsDAO.isLoggedIn(req.cookies[config.cookieName])
+    .then(function renderIndex(loginObj){
+        if(loginObj.loggedIn) {
+            res.render('index', { title: 'Express', username : loginObj.user.username })
+        } else {
+            res.render('index', { title: 'Express', username : 'Not logged in!' })
+        }
+    });
+
 });
 
 module.exports = router;
