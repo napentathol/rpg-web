@@ -1,8 +1,77 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+html, body{
+    height: 100%;
 }
 
-a {
-  color: #00B7FF;
+.main-rpg-panel {
+    position: absolute;
+    top: 61px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    margin-bottom: 0;
+}
+
+.chat-rpg-panel{
+    height : 100%;
+}
+
+.chat-rpg-well{
+    position: absolute;
+    top: 10px;
+    right: 280px;
+    left: 10px;
+    bottom: 50px;
+    padding: 0;
+    margin-bottom: 0;
+    overflow-y: auto;
+}
+
+.chat-rpg-button-well{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 260px;
+    bottom: 10px;
+    margin-bottom: 0;
+}
+
+.chat-rpg-buttons{
+    overflow-y: auto;
+    position: absolute;
+    top: 30px;
+    bottom: 50px;
+    right: 0;
+    left: 10px;
+}
+
+.chat-rpg-button-container{
+    width: 228px;
+}
+
+.chat-rpg-input{
+    position: absolute;
+    margin-left: 10px;
+    margin-right: 280px;
+    bottom: 10px;
+}
+
+.chat-rpg-table{
+    margin: 0;
+}
+
+.chat-rpg-table>tbody>tr:hover>td{
+    background-color: #efefef;
+}
+
+.roll-input{
+    width: 57px !important;
+}
+
+.roll-input-group{
+    margin-top: 4px;
+}
+
+.roll-add-group{
+    position: absolute;
+    bottom: 10px;
 }

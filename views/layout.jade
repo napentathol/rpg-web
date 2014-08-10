@@ -1,11 +1,18 @@
 doctype html
-html
+html.no-js(lang='en', ng-app='rpgApp')
     head
         title= title
+        link(rel='stylesheet', href='bootstrap/dist/css/bootstrap.min.css')
         link(rel='stylesheet', href='/stylesheets/style.css')
     body
         block content
 
+        script(type='text/javascript', src='angular/angular.js')
+        script(type='text/javascript', src='angular-route/angular-route.js')
+        script(type='text/javascript', src='angular-animate/angular-animate.js')
         script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
-        script(defer, src='/js/script.js')
-        script(defer, src='/socket.io/socket.io.js')
+        script(type='text/javascript', src='bootstrap/dist/js/bootstrap.min.js')
+        script(src='/socket.io/socket.io.js')
+        script(src='/js/script.js')
+        script(src='/js/web-socket-service.js')
+        script(src='/js/chat-directive.js')

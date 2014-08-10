@@ -1,16 +1,29 @@
 /* Author: YOUR NAME HERE
 */
-var socket;
 
-$(document).ready(function() {   
+var rpgApp ={
+    $ng : angular.module('rpgApp', [ 'ngRoute', 'ngAnimate' ]),
+    socket : {}
+};
 
-   socket = io.connect();
+rpgApp.$ng.config(['$routeProvider',
+    function($routeProvider) {
+        $routeProvider.when('/chat', {
+            templateUrl : 'chat'
+        }).otherwise({
+            redirectTo : 'chat'
+        });
+    }
+]);
 
-  $('#sender').bind('click', function() {
-   socket.emit('message', 'Message Sent on ' + new Date());     
-  });
+$(document).ready(function() {
+    rpgApp.socket = io.connect();
 
-  socket.on('server_message', function(data){
-   $('#receiver').append('<li>' + data + '</li>');  
-  });
+    $('#sender').bind('click', function() {
+        rpgApp.socket.emit('message', 'Message Sent on ' + new Date());
+    });
+
+    rpgApp.socket.on('server_message', function(data){
+        $('#receiver').append('<li>' + data + '</li>');
+    });
 });

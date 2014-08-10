@@ -1,0 +1,38 @@
+<div class="main-rpg-panel panel panel-default">
+    <div id="rpg-chat-area" class="well well-sm chat-rpg-well">
+        <table class="table table-bordered table-striped table-hover table-condensed chat-rpg-table">
+            <tbody>
+                <tr ng-repeat="msg in messages track by $index">
+                    <td style="color: {{msg.color}}">{{msg.name}}</td>
+                    <td>{{msg.data}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="input-group input-group-sm chat-rpg-input">
+        <input type="text" class="form-control" ng-model="message" ng-submit="sendMessage()">
+        <span class="input-group-btn">
+            <button class="btn btn-primary" type="button" ng-click="sendMessage()">Send</button>
+        </span>
+    </div>
+    <div class="well well-sm chat-rpg-button-well">
+        <div>Number of dice | Die value | Bonus</div>
+        <div class="chat-rpg-buttons">
+            <div class="chat-rpg-button-container">
+                <div ng-repeat="roll in rolls track by $index">
+                    <div class="input-group input-group-sm roll-input-group" >
+                        <input type="number" class="roll-input form-control" ng-model="roll.num">
+                        <input type="number" class="roll-input form-control" ng-model="roll.val">
+                        <input type="number" class="roll-input form-control" ng-model="roll.bonus">
+                        <div class="input-group-btn">
+                            <button class="roll-input btn btn-primary" type="button" ng-click="sendRoll(roll)">Roll</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-group btn-group-sm roll-input-group roll-add-group">
+            <button type="button" class="btn btn-primary" ng-click="addRoll()">Add a roller</button>
+        </div>
+    </div>
+</div>
