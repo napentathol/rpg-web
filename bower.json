@@ -1,0 +1,28 @@
+{
+  "name": "rpg-web",
+  "version": "0.0.0",
+  "homepage": "https://github.com/napentathol/rpg-web",
+  "description": "An rpg thing.",
+  "main": "./bin/www",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "RPG",
+    "web"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-animate": "1.2.21",
+    "bootstrap": "3.2.0",
+    "angular-route": "1.2.21"
+  }
+}
