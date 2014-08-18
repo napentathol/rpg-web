@@ -59,8 +59,8 @@ html, body{
     margin: 0;
 }
 
-.chat-rpg-table>tbody>tr:hover>td{
-    background-color: #efefef;
+.chat-message-content{
+    width: 100%;
 }
 
 .roll-input{

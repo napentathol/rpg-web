@@ -8,46 +8,18 @@ rpgApp.addWebSocketService = function(){
     };
 
     service.connect = function(){
-        if(service.ws){ return; }
+        rpgApp.socket = io.connect();
 
-        service.ws = new WebSocket('ws://www.sodiumlabs.us:19902/','rpg-protocol');
+        rpgApp.socket.emit('login',rpgApp.getCookie());
 
-        service.ws.onopen=function(){
-            var msg = {
-                'name': 'LOCAL',
-                'color': '#A00000',
-                'data': 'Connected!'
-            };
-            service.runCallBacks(msg);
-            service.validate();
-        };
-
-        service.ws.onclose=function(){
-            var msg = {
-                'name': 'LOCAL',
-                'color': '#A00000',
-                'data': 'Connection Closed!'
-            };
-            service.runCallBacks(msg);
-        };
-
-        service.ws.onerror=function(){
-            var msg = {
-                'name': 'LOCAL',
-                'color': '#A00000',
-                'data': 'Connection Error!'
-            };
-            service.runCallBacks(msg);
-        };
-
-        service.ws.onmessage=function(message){
-            console.log(message.data);
-            service.runCallBacks( JSON.parse(message.data) );
-        };
+        rpgApp.socket.on('message', function(data){
+            service.runCallBacks(data);
+        });
     };
 
     service.send = function(message){
-        rpgApp.socket(message);
+        console.log(JSON.stringify(message));
+        rpgApp.socket.emit('message',message);
     };
 
     service.runCallBacks = function(message) {
@@ -62,14 +34,6 @@ rpgApp.addWebSocketService = function(){
         service.callback.push(callback);
     };
 
-    service.validate = function(){
-        var validate = {
-            'type' : 'validate',
-            'data' : service.getCookie()
-        };
-        service.send(validate);
-    };
-
     service.getCookie = rpgApp.getCookie ;
 
     service.connect();
@@ -78,7 +42,7 @@ rpgApp.addWebSocketService = function(){
 };
 
 rpgApp.getCookie = function(){
-    var name = "nal_auth=";
+    var name = rpgApp.cookieName + "=";
     var ca = document.cookie.split(';');
     //noinspection LoopStatementThatDoesntLoopJS
     for(var i in ca){

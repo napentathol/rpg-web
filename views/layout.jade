@@ -2,7 +2,7 @@ doctype html
 html.no-js(lang='en', ng-app='rpgApp')
     head
         title= title
-        link(rel='stylesheet', href='bootstrap/dist/css/bootstrap.min.css')
+        link(rel='stylesheet', href='/stylesheets/dark-bootstrap.min.css')
         link(rel='stylesheet', href='/stylesheets/style.css')
     body
         block content
@@ -14,5 +14,7 @@ html.no-js(lang='en', ng-app='rpgApp')
         script(type='text/javascript', src='bootstrap/dist/js/bootstrap.min.js')
         script(src='/socket.io/socket.io.js')
         script(src='/js/script.js')
+        script(type='text/javascript').
+            rpgApp.cookieName =!{JSON.stringify(cookieName)}
         script(src='/js/web-socket-service.js')
         script(src='/js/chat-directive.js')

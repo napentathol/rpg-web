@@ -19,7 +19,8 @@ module.exports = (function(){
                 "email VARCHAR(255) NOT NULL," +
                 "FirstName CHAR(15) NOT NULL default ''," +
                 "LastName CHAR(15) NOT NULL default ''," +
-                "salt VARCHAR(8) NOT NULL" +
+                "salt VARCHAR(8) NOT NULL, " +
+                "campaign INT NOT NULL default 1" +
             ");",
             function (err) {
                 if (err) {
@@ -74,7 +75,7 @@ module.exports = (function(){
                 if (err) {
                     throw err;
                 }
-                console.log('ADMIN USER LOADED!');
+                console.log('ADMIN USER ROLE LOADED!');
             }
         );
 
@@ -94,6 +95,20 @@ module.exports = (function(){
             }
         );
 
+        // Create admin user role.
+        connection.query("INSERT INTO campaigns (ADMIN_PK) " +
+                "SELECT * FROM (SELECT (SELECT PK FROM users WHERE username = 'admin')) AS tmp " +
+                "WHERE NOT EXISTS (" +
+                    "SELECT PK FROM campaigns WHERE PK = 0" +
+                ") LIMIT 1;",
+            function (err) {
+                if (err) {
+                    throw err;
+                }
+                console.log('DEFAULT CAMPAIGN LOADED!');
+            }
+        );
+
         // Create cookies table.
         connection.query("CREATE TABLE IF NOT EXISTS characters " +
             "(" +
@@ -104,7 +119,7 @@ module.exports = (function(){
                 "CAMPAIGNS_PK INT NOT NULL," +
                 "FOREIGN KEY (CAMPAIGNS_PK) REFERENCES campaigns (PK)," +
                 "char_name VARCHAR(255) NOT NULL DEFAULT 'Herpen Derpenstein'," +
-                "chat_color VARCHAR(7) NOT NULL DEFAULT '#000000'," +
+                "chat_color VARCHAR(7) NOT NULL DEFAULT '#FFFFFF'," +
                 "XP INT NOT NULL DEFAULT '0'," +
                 "lvl INT NOT NULL DEFAULT '1'," +
                 "char_init_base INT NOT NULL DEFAULT '0'," +
@@ -137,6 +152,20 @@ module.exports = (function(){
                     throw err;
                 }
                 console.log('CHARACTERS TABLE LOADED!');
+            }
+        );
+
+        // Create admin user role.
+        connection.query("INSERT INTO characters (USERS_PK, CAMPAIGNS_PK, char_name) " +
+                "SELECT * FROM (SELECT (SELECT PK FROM users WHERE username = 'admin'), 1, 'ADMIN') AS tmp " +
+                "WHERE NOT EXISTS (" +
+                "SELECT PK FROM campaigns WHERE PK = 0" +
+                ") LIMIT 1;",
+            function (err) {
+                if (err) {
+                    throw err;
+                }
+                console.log('ADMIN CHARACTER CREATED!');
             }
         );
 

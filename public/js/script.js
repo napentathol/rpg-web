@@ -15,15 +15,3 @@ rpgApp.$ng.config(['$routeProvider',
         });
     }
 ]);
-
-$(document).ready(function() {
-    rpgApp.socket = io.connect();
-
-    $('#sender').bind('click', function() {
-        rpgApp.socket.emit('message', 'Message Sent on ' + new Date());
-    });
-
-    rpgApp.socket.on('server_message', function(data){
-        $('#receiver').append('<li>' + data + '</li>');
-    });
-});
